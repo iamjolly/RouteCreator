@@ -1,0 +1,124 @@
+
+body
+{ 
+	position: absolute; 
+	top: 0px; 
+	left: 0px; 
+	
+	width: 100%; 
+	height: 100%; 
+	
+	margin: 0px; 
+}
+
+div.header
+{
+	position: relative;
+	
+	margin-top: 10px; 
+	margin-right: 10px; 
+	margin-bottom: 0px; 
+	margin-left: 10px;
+}
+
+div.maincontent
+{
+	position: relative;
+	
+	min-width: 600px;
+	
+	margin-top: 10px; 
+	margin-right: 10px; 
+	margin-bottom: 0px; 
+	margin-left: 10px;
+}
+
+div#mapCanvas 
+{
+	position: relative;
+	top: 0px;
+	left: 0px;
+	
+	width: 65%; 
+	height: 600px;
+} 
+
+div.controlpage
+{
+	position: absolute;
+	top: 0px;
+	left: 65%;
+	
+	width: 30%;
+	
+	margin-left: 10px;
+}
+
+div.footer
+{
+	height: 10px;
+}
+
+h1.title
+{
+}
+
+div.controlFormWrapper
+{
+	padding: 5px;
+}
+
+div.textBoxWrapper
+{
+	margin-right: 6px;
+}
+
+input#addressSearchBox
+{
+	width: 100%;
+}
+
+input#addressSearchButton
+{
+	width: 115px;
+}
+
+input#loopRouteButton
+{
+	width: 115px;
+}
+
+input#outAndBackRouteButton
+{
+	width: 115px;
+}
+
+input#endRouteButton
+{
+	width: 115px;
+}
+
+input#undoRouteButton
+{
+	width: 115px;
+}
+
+input#clearRouteButton
+{
+	width: 115px;
+}
+
+input#routeNameTextBox
+{
+	width: 100%;
+}
+
+textarea#routeDescriptionTextBox
+{
+	width: 100%;
+}
+
+input#saveRouteButton
+{
+	width: 115px;
+}

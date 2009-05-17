@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+		<title>Google Maps Route Creator</title>
+		
+		<link href="css/layout.css" rel="stylesheet" type="text/css" media="all" /> 
+		<link href="css/color.css" rel="stylesheet" type="text/css" media="all" />
+		<link href="css/type.css" rel="stylesheet" type="text/css" media="all" /> 
+		
+		<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAjWgae6dKsqZZ9NvbLcFS3BSGvlht6FbqAdODdqTtZ4mo-suFjRSN7n0elvNN8gxP6U6JB5qA9zgSPQ" type="text/javascript"></script>
+	
+		<script type="text/javascript" src="/scripts/prototype/prototype.js"></script>
+		<script type="text/javascript" src="/scripts/json/json2.js"></script>
+		<script type="text/javascript" src="scripts/RouteChunk.js"></script>
+		<script type="text/javascript" src="scripts/RouteCreator.js"></script>
+		<script type="text/javascript" src="scripts/Site.js"></script>
+		
+		<script type="text/javascript">
+			
+		
+		</script>
+		
+	</head>
+
+	<body onload="init('mapCanvas', 'routeDistance', new GLatLng(42.349286, -71.52748) )" onunload="GUnload()">
+	
+	
+			<div class="header">
+				<h1 class="title">Google Maps Route Creator</h1>
+			</div>
+			
+			<div class="maincontent">
+				<div id="mapCanvas">
+					<noscript><div>Javascript is required to run Google Maps</div></noscript>
+				</div>
+				
+				<div class="controlpage">
+					<div class="controlFormWrapper">
+						<form onsubmit="return false" action="">
+							<div class="textBoxWrapper">
+								<input id="addressSearchBox" name="addressSearchBox" type="text" value="Search for an address..." onclick="clickAddressSearchBox()" onkeyup="keyPressAddressSearchBox(event)" />
+							</div>
+							<div>
+								<input id="addressSearchButton" name="addressSearchButton" type="button" value="Search" onclick="clickAddressSearchButton()" />
+								<br />
+								<br />
+								<div id="routeDistance">Distance:</div>
+								<br />
+								<input id="loopRouteButton" name="loopRouteButton" type="button" value="Loop" onclick="clickLoopRouteButton()" />
+								<br />
+								<input id="outAndBackRouteButton" name="outAndBackRouteButton" type="button" value="Out and Back" onclick="clickOutAndBackButton()" />
+								<br />
+								<input id="endRouteButton" name="endRouteButton" type="button" value="End Route" onclick="clickEndRouteButton()" />
+								<br />
+								<input id="undoRouteButton" name="undoRouteButton" type="button" value="Undo" onclick="clickUndoRouteButton()" />
+								<br />
+								<input id="clearRouteButton" name="clearRouteButton" type="button" value="Clear" onclick="clickClearRouteButton()" />
+								<br />
+								<br />
+								Milestones:
+								<br />
+								<select id="milestoneMarkerSelectBox" name="milestoneMarkerSelectBox" onchange="changeMilestoneMarkerSelectBox()" >
+									<option value="none" selected="selected">None</option>
+									<option value="1">1 mile</option>
+									<option value="2">2 miles</option>
+									<option value="5">5 miles</option>
+									<option value="10">10 miles</option>
+									<option value="20">20 miles</option>
+									<option value="50">50 miles</option>
+									<option value="100">100 miles</option>
+								</select>
+								<br />
+								<br />
+								<input id="followRoadsCheckbox" name="followRoadsCheckbox" type="checkbox" onclick="clickFollowRoadsCheckBox()" checked="checked" /> Follow Roads
+								<br />
+								<input id="metricSystemCheckbox" name="metricSystemCheckbox" type="checkbox" onclick="clickMetricSystemCheckBox()" /> Metric Units
+								<br />
+								<input id="autoEndCheckbox" name="autoEndCheckbox" type="checkbox" onclick="clickAutoEndCheckBox()" /> Auto End Route
+								<br />
+								<br />
+								<div class="textBoxWrapper">
+									Route Name:
+									<input id="routeNameTextBox" name="routeNameTextBox" type="text" />
+									<br />
+									Route Description:
+									<textarea id="routeDescriptionTextBox" name="routeDescriptionTextBox"></textarea>
+								</div>
+								<br />
+								<input id="saveRouteButton" name="saveRouteButton" type="button" value="Save Route As" onclick="clickSaveRouteButton()" />
+								<select id="saveRouteSelectBox" name="saveRouteSelectBox">
+									<option value="kml" selected="selected">KML</option>
+									<option value="tcx">TCX</option>
+									<option value="gpx">GPX</option>
+								</select>
+							</div>
+						</form>
+						<form id="submitRouteForm" method="post" action="saveRoute.php">
+							<div>
+								<input id="routeData" name="routeData" type="hidden" />
+							</div>
+						</form>
+						<div id="elevationStatus">Elevation Status</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="footer"></div>
+		
+		
+	</body>
+
+
+</html>
