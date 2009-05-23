@@ -218,6 +218,13 @@ function clickSaveRouteButton()
 		// Prompt the user for the pace
 		var pace = prompt("Please enter your desired pace ("+units+"):",10);
 		
+		// Check to see if the user cancelled the transaction
+		if (pace == null)
+		{
+			// If the user pressed the cancel button,  do not save the file
+			return;
+		}
+		
 		// Convert the pace into meters per second based on whether we are using metric units or not
 		if ($('saveRouteSelectBox').checked)
 		{
