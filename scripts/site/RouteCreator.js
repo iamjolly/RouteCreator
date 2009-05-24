@@ -662,7 +662,7 @@ RouteCreator = Class.create(
 		
 		var coordinatesString = JSON.stringify(coordinatesJSON);
 		
-		GDownloadUrl("http://demo.rainydaycommunications.net/route/getAltitude.php", 
+		GDownloadUrl("http://route.rainydaycommunications.net/getAltitude.php", 
 					 function(data, status)
 					 {
 						if (status == G_GEO_SUCCESS)
