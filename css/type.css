@@ -74,6 +74,15 @@ input#clearRouteButton
 {
 }
 
+span#milestoneText
+{
+	visibility: hidden
+}
+
+select#milestoneMarkerSelectBox
+{
+}
+
 input#routeNameTextBox
 {
 }

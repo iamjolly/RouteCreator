@@ -58,7 +58,7 @@
 								<input id="clearRouteButton" name="clearRouteButton" type="button" value="Clear" onclick="clickClearRouteButton()" />
 								<br />
 								<br />
-								Milestones:
+								<span id="milestoneText">Milestones:</span>
 								<br />
 								<select id="milestoneMarkerSelectBox" name="milestoneMarkerSelectBox" onchange="changeMilestoneMarkerSelectBox()" >
 									<option value="none" selected="selected">None</option>
@@ -84,14 +84,14 @@
 									<input id="routeNameTextBox" name="routeNameTextBox" type="text" />
 									<br />
 									Route Description:
-									<textarea id="routeDescriptionTextBox" name="routeDescriptionTextBox"></textarea>
+									<textarea id="routeDescriptionTextBox" name="routeDescriptionTextBox" rows="2" cols="1"></textarea>
 								</div>
 								<br />
 								<input id="saveRouteButton" name="saveRouteButton" type="button" value="Save Route As" onclick="clickSaveRouteButton()" />
 								<select id="saveRouteSelectBox" name="saveRouteSelectBox">
-									<option value="kml" selected="selected">KML</option>
-									<option value="tcx">TCX</option>
-									<option value="gpx">GPX</option>
+									<option value="tcx" selected="selected">TCX</option>
+									<!--<option value="gpx">GPX</option>
+									<option value="kml" selected="selected">KML</option>-->
 								</select>
 							</div>
 						</form>

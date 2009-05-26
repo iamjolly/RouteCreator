@@ -105,6 +105,7 @@ input#loopRouteButton
 input#outAndBackRouteButton
 {
 	width: 115px;
+	visibility: hidden
 }
 
 input#endRouteButton
@@ -120,6 +121,16 @@ input#undoRouteButton
 input#clearRouteButton
 {
 	width: 115px;
+}
+
+span#milestoneText
+{
+	visibility: hidden
+}
+
+select#milestoneMarkerSelectBox
+{
+	visibility: hidden
 }
 
 input#routeNameTextBox
