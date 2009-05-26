@@ -1,6 +1,71 @@
 
 // Global variable to hold the route creator object
 var routeCreator = null;
+
+// Method: externalLinks
+// Inputs: None.
+// Outputs: None
+function externalLinks() 
+{
+	// Check to see if the function getElementsByTagName exists
+	if (!document.getElementsByTagName) 
+	{
+		return;
+	}
+	
+	// Get a list of anchor tags
+	var anchors = document.getElementsByTagName("a");
+ 
+	// Loop through the list of anchor tags
+	for (var i=0; i<anchors.length; i++) 
+	{
+		// Get a reference to the anchor tag
+		var anchor = anchors[i];
+		
+		// Check if the href attribute exists and if the rel attribute is set to external
+		if (anchor.getAttribute("href") && anchor.getAttribute("rel") == "external")
+		{
+			// Set the target of the anchor to open a new page
+			anchor.target = "_blank";
+		}
+	}
+}
+
+// Method: addLoadEvent
+// Inputs: func - The function to add to the list of functions to run upon the document loading
+// Outputs: None
+function addLoadEvent(func) 
+{
+	// Get the old onload function (if any)
+	var oldonload = window.onload;
+	
+	// Check the type of the window.onload variable
+	if (typeof window.onload != 'function') 
+	{
+		// If it is not a function, set it to the function we want to add to the list
+		window.onload = func;
+	} 
+	else 
+	{
+		// If it is a function, set it to a new function
+		window.onload = function() 
+		{
+			// if the old onload variable is set
+			if (oldonload) 
+			{
+				// Call it
+				oldonload();
+			}
+			
+			// Call the new function
+			func();
+		}
+	}
+}
+
+// Add the external links function to the list of functions to call on the document
+addLoadEvent(externalLinks);
+
 			
 // Method: init
 // Inputs: mapElement - The DOM id of the element that will display the map
