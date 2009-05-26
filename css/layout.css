@@ -21,6 +21,20 @@ div.header
 	margin-left: 10px;
 }
 
+div.subHeader
+{
+	position: relative;
+	
+	margin-top: 10px; 
+	margin-right: 10px; 
+	margin-bottom: 0px; 
+	margin-left: 10px;
+}
+
+span.subHeaderText
+{
+}
+
 div.maincontent
 {
 	position: relative;

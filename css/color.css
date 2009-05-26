@@ -9,6 +9,15 @@ div.header
 	background-color: transparent;
 }
 
+div.subHeader
+{
+	background-color: transparent;
+}
+
+span.subHeaderText
+{
+}
+
 div.maincontent
 {
 	background-color: transparent;

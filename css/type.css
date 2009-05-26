@@ -8,6 +8,15 @@ div.header
 {
 }
 
+div.subHeader
+{
+	font-size: small;
+}
+
+span.subHeaderText
+{
+}
+
 div.maincontent
 {
 }
