@@ -707,6 +707,7 @@ RouteCreator = Class.create(
 		}
 		else
 		{
+			this.elevationCount = 0;
 			$("elevationStatus").innerHTML = "Finished acquiring elevation data.";
 		}
 	},
