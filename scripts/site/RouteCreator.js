@@ -421,6 +421,12 @@ RouteCreator = Class.create(
         
         // Remove all route chunks from the list
         this.routeChunkList.clear();
+		
+		// Clear out the number of outstanding elevation requests
+		this.elevationCount = 0;
+		
+		// Update the elevation display
+		this.eventFinishedGettingElevationData();
         
         // Update the distance display
         this.updateDistanceDisplay();
