@@ -14,6 +14,9 @@
 	
 	// Set the cURL options
 	curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
+	
+	// Set the timeout
+	curl_setopt($curlHandle, CURLOPT_CONNECTTIMEOUT, 1);
 
 	// Create the array used to hold the altitude data
 	$altitudeArray = array();
@@ -39,8 +42,8 @@
 		// Execute the request
 		$altitudeString = curl_exec($curlHandle);
 		
-		// Initialize the altitude to zero
-		$altitude = 0;
+		// Initialize the altitude to a large negative number
+		$altitude = -10000;
 		
 		// Extract the altitude data
 		if (preg_match_all($regexPattern, $altitudeString, $results, PREG_PATTERN_ORDER))
@@ -58,4 +61,6 @@
 
 	// Return the altitude array
 	echo(json_encode($altitudeArray));
+	
+	
 ?>

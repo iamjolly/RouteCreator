@@ -665,7 +665,7 @@ RouteCreator = Class.create(
 			coordinatesJSON[i].latitude = p.lat();
 			coordinatesJSON[i].longitude = p.lng();
 		}
-		
+
 		var coordinatesString = JSON.stringify(coordinatesJSON);
 		
 		GDownloadUrl("http://route.rainydaycommunications.net/getAltitude.php", 
@@ -674,9 +674,10 @@ RouteCreator = Class.create(
 						if (status == G_GEO_SUCCESS)
 						{
 							var altitudeArray = JSON.parse(data); 
+
 							chunk.addAltitudeData(altitudeArray);
 						}
-						else if (status == -1)
+						else if (status <= 0)
 						{
 							GLog.write("Error: Elevation data request timed out");
 						}
