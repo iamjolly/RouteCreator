@@ -28,8 +28,9 @@ RouteCreator = Class.create(
     // Inputs: mapElement - The DOM id of the element that will display the map
     //        distanceElement - The DOM id of the element that will display the distance
     //        startingLocation -  A GLatLng point that indicates where the map should be initialy centered at
+	//        elevationPage - The URL to use to acquire elevation data
     // Outputs: None
-    initialize: function(mapElement, distanceElement, startingLocation)
+    initialize: function(mapElement, distanceElement, startingLocation, elevationPage)
     {
         // Make sure that the browser is compatible with the Google Maps API
         if (GBrowserIsCompatible()) 
@@ -57,6 +58,9 @@ RouteCreator = Class.create(
             
             // A reference to the distance element
             this.distanceDisplay = $(distanceElement);
+			
+			// The URL to use for acquiring elevation data
+			this.elevationPage = elevationPage;
 			
 			// A count of outstanding elevation data sets
 			this.elevationCount = 0;
@@ -668,7 +672,7 @@ RouteCreator = Class.create(
 
 		var coordinatesString = JSON.stringify(coordinatesJSON);
 		
-		GDownloadUrl("http://route.rainydaycommunications.net/getAltitude.php", 
+		GDownloadUrl(this.elevationPage, 
 					 function(data, status)
 					 {
 						if (status == G_GEO_SUCCESS)

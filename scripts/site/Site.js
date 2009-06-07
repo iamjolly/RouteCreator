@@ -68,17 +68,21 @@ addLoadEvent(externalLinks);
 
 			
 // Method: init
-// Inputs: mapElement - The DOM id of the element that will display the map
-//	      distanceElement - The DOM id of the element that will display the distance
-// 	      startingLocation -  A GLatLng point that indicates where the map should be initialy centered at
+// Inputs: None
 // Outputs: None
-function init(mapElement, distanceElement, startingLocation)
+function init()
 {
+	var mapElement = "mapCanvas";
+	var distanceElement = "routeDistance";
+	var startingLocation = new GLatLng(42.349286, -71.52748);
+	var elevationPage = "http://route.rainydaycommunications.net/getAltitude.php";
+
+
 	// Make sure that the browser is compatible with the Google Maps API
 	if (GBrowserIsCompatible()) 
 	{
 		// Create the route creator
-		routeCreator = new RouteCreator(mapElement, distanceElement, startingLocation);
+		routeCreator = new RouteCreator(mapElement, distanceElement, startingLocation, elevationPage);
 		
 		// Enable following roads
 		routeCreator.enableFollowingRoads();
