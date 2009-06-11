@@ -68,15 +68,17 @@ addLoadEvent(externalLinks);
 
 			
 // Method: init
-// Inputs: None
+// Inputs: location - The starting location of the map
 // Outputs: None
-function init()
+function init(location)
 {
+	// The settings to use for the RotueCreator object
 	var mapElement = "mapCanvas";
 	var distanceElement = "routeDistance";
-	var startingLocation = new GLatLng(42.349286, -71.52748);
+	var startingLocation = location;
 	var elevationPage = "http://route.rainydaycommunications.net/getAltitude.php";
-
+	
+	
 
 	// Make sure that the browser is compatible with the Google Maps API
 	if (GBrowserIsCompatible()) 
@@ -110,6 +112,104 @@ function init()
 	
 	// Enter a default ride name in the route name textbox
 	$('routeNameTextBox').value = getDateAsString() + " Ride";
+}
+
+// Method: getStartingLocation
+// Inputs: None
+// Outputs: None
+function getStartingLocation()
+{
+	// Create a flag that indicates if there is a starting location or not
+	var startingLocation = false;
+	
+	// Create variables to hold the latitude and longitude
+	var latitude = "37.421972";
+	var longitude = "-122.084143";
+	
+	// Get the starting location cookie
+	var startingCoordinates = getCookie("startingLocation");
+
+	// Check to see if the starting location cookie exists
+	if (startingCoordinates != "")
+	{
+		// If the starting location cookie exists, split it into individual coordinates
+		var tempArray = startingCoordinates.split(",",2);
+		
+		// Check to make sure the coordinates exist
+		if ( (tempArray.length == 2) && (tempArray[0] != "") && (tempArray[1] != "") )
+		{
+			// If everything seems fine, get the latitude and longitude
+			latitude = tempArray[0];
+			longitude = tempArray[1];
+			startingLocation = true;
+		}
+		else
+		{
+			// If there was a problem with the coordinates in the cookie, clear out the value so that the user will be prompted for a starting location
+			startingLocation = false;
+		}
+	}
+	
+	// Check to see if we need to ask the user for a starting location
+	if (!startingLocation)
+	{
+		// If the starting location cookie doesn't exist or is empty
+		// Prompt the user for a starting address
+		var address = prompt("Please enter a starting location:");
+		
+		// Check to see if the user entered an address
+		if (address == null)
+		{
+			// If the user didn't enter anything, call the init function with the default coordinates
+			init(new GLatLng(latitude, longitude));
+		}
+		else
+		{
+			// If the user did enter an address, create a geocoder and lookup the coordinates
+			var locationSearch = new GClientGeocoder();
+			locationSearch.getLocations( address, startingLocationSearchResults );
+		}
+	}
+	
+	// Check to see if we have a starting location
+	if (startingLocation)
+	{
+		//  If the start location does exist, call the init function
+		init(new GLatLng(latitude, longitude));
+	}
+	
+}
+
+// Method: getStartingLocation
+// Inputs: results - The GeoCoder search results
+// Outputs: None
+function startingLocationSearchResults(results)
+{
+	// Create variables to hold the latitude and longitude
+	var latitude = "37.421972";
+	var longitude = "-122.084143";
+	
+	// Check the status of the location search
+	if (results.Status.code == G_GEO_SUCCESS)
+	{
+		// If the search was successful, get the location
+		var locationCoords = results.Placemark[0].Point.coordinates;
+		
+		// Get the coordinates
+		latitude = locationCoords[1];
+		longitude = locationCoords[0];
+		
+		// Save the coordinates as a cookie
+		setCookie("startingLocation", latitude+","+longitude, 30);
+	}
+	else
+	{
+		// If the search failed, log the error
+		GLog.write("Find location failed.  Location: " + results.name + " Code: " + results.Status.code);
+	}
+	
+	// Call the init function with the coordinates
+	init( new GLatLng(latitude, longitude) );
 }
 	
 // Method: clickAddressSearchBox
@@ -369,3 +469,4 @@ function getDateAsString()
 	// Return the date string
 	return dateString;
 }
+
