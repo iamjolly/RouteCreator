@@ -592,22 +592,6 @@ RouteCreator = Class.create(
 		this.timeInSeconds = seconds;
 	},
     
-    returnAlongRoute: function()
-    {
-    },
-	
-	buildReturnPath: function()
-	{
-	},
-	
-	eventReturnPathLoaded: function()
-	{
-	},
-	
-	eventReturnPathError: function()
-	{
-	},
-    
     // Method: markerZOrder
     // Inputs: marker - A reference to the marker to retrieve the z order for
     // Outputs: markerZOrder - The Z index to use for the marker
@@ -650,43 +634,56 @@ RouteCreator = Class.create(
         return index;
     },
 	
+	// Method: getElevationData
+	// Inputs: routeChunkIndex - The index of the route chunk to get elevation data for
+	// Outputs: None
 	getElevationData: function(routeChunkIndex)
 	{	
+		// Raise the event that we are getting new elevation data
 		this.eventGettingElevationData();
 		
+		// Create an array of coordinates to be converted into JSON
 		var coordinatesJSON = [];
 		
-		
+		// Get the route chunk to obtain the elevation data for
 		var chunk = this.routeChunkList[routeChunkIndex];
 		
-		
+		// Loop through the vertices of the route chunk
 		for (var i = 0; i < chunk.route.getVertexCount(); i++)
 		{
-			
+			// Get a reference to the next vertex
 			var p = chunk.route.getVertex(i);
 			
+			// Add the coordinates to the JSON array
 			coordinatesJSON[i] = {};
 			coordinatesJSON[i].latitude = p.lat();
 			coordinatesJSON[i].longitude = p.lng();
 		}
 
+		// Convert the array of coordinates into a JSON string
 		var coordinatesString = JSON.stringify(coordinatesJSON);
 		
+		// Download the elevation page, passing the JSON coordinate string as a POST parameter and giving it a completion function
 		GDownloadUrl(this.elevationPage, 
 					 function(data, status)
 					 {
+						// Check the status of the download request
 						if (status == G_GEO_SUCCESS)
 						{
+							// If the download was successful, parse the returned JSON data into an array
 							var altitudeArray = JSON.parse(data); 
-
+	
+							// Add the altitude data to the route chunk
 							chunk.addAltitudeData(altitudeArray);
 						}
 						else if (status <= 0)
 						{
+							// If the status request is less than or equal to zero, log an error indicating that the request timed out
 							GLog.write("Error: Elevation data request timed out");
 						}
 						else
 						{
+							// If there was any other status code, log an error with the code
 							GLog.write("Error: Elevation data request status code " + status);
 						}
 						
@@ -695,24 +692,38 @@ RouteCreator = Class.create(
 					 "coordinates="+coordinatesString); 
 	},
 	
+	// Method: eventGettingElevationData
+	// Inputs: None
+	// Outputs: None
 	eventGettingElevationData: function()
 	{
+		// Increment the number of outstanding elevation requests
 		this.elevationCount += 1;
 		
+		// Display the number of outstanding elevation requests
 		$("elevationStatus").innerHTML = "Outstanding Elevation Datasets: " + this.elevationCount;
 	},
 	
+	// Method: eventFinishedGettingElevationData
+	// Inputs: None
+	// Outputs: None
 	eventFinishedGettingElevationData: function()
 	{
+		// Decrement the number of outstanding elevation requests
 		this.elevationCount -= 1;
 		
+		// Check the number of remaining elevation requests
 		if (this.elevationCount > 0)
 		{
+			// If there is at least one outstanding elevation request, display the number
 			$("elevationStatus").innerHTML = "Outstanding elevation datasets: " + this.elevationCount;
 		}
 		else
 		{
+			// If there are no elevation requests, set the number of outstanding elevation requests to zero (so that we'll never go negative)
 			this.elevationCount = 0;
+			
+			// Display a message indicating that we are done acquiring elevation data
 			$("elevationStatus").innerHTML = "Finished acquiring elevation data.";
 		}
 	},
