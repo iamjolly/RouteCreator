@@ -268,8 +268,31 @@ RouteCreator = Class.create(
             // Check to see if this is the first waypoint we are putting down
             if (this.routeChunkList.size() == 0) 
             {
-                // If it is, get directions to itself
-                this.routeDirections.loadFromWaypoints( [position.toUrlValue(6),position.toUrlValue(6)], {getPolyline:true} );
+				// If this is the first point, check to see if we are following roads
+				if (this.followRoads)
+                {
+                    // If we are following roads, get directions to itself
+					this.routeDirections.loadFromWaypoints( [position.toUrlValue(6),position.toUrlValue(6)], {getPolyline:true} );
+                }
+                else
+                {
+					// If we aren't following roads, then we need to manually create the start point
+                    var routePolyline = new GPolyline( [position] );
+					
+					// Create a new route chunk
+                    var route = new RouteChunk(routePolyline);
+					
+					// Create a start marker and draw it on the map at the starting position of the route chunk
+					this.markerStart = new GMarker(route.startPoint, {icon:this.iconStart, title:"Start of Route", clickable:false, zIndexProcess:this.markerZOrder.bind(this)} );
+					this.map.addOverlay(this.markerStart);
+					
+					// Add the route chunk to the  list
+					this.routeChunkList.push(route);
+		
+					// Get the elevation data for the new route chunk
+					this.getElevationData(this.routeChunkList.length-1);
+				}
+			
             } 
             else 
             {
@@ -313,7 +336,7 @@ RouteCreator = Class.create(
     {
         // Create the new route chunk and initialize it to the direction line
         var route = new RouteChunk(this.routeDirections.getPolyline());
-        
+		
         // Increase the distance of the route
         this.distanceInMeters += route.distance();
         
